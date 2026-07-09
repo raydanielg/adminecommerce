@@ -14,17 +14,14 @@ use App\Models\BusinessSetting;
 use App\CentralLogics\SMS_module;
 use App\Models\PhoneVerification;
  use Illuminate\Support\Facades\DB;
- use Gregwar\Captcha\CaptchaBuilder;
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
 use App\Mail\AdminPasswordResetMail;
 use Brian2694\Toastr\Facades\Toastr;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
 use App\Mail\PasswordResetRequestMail;
 use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\Session;
 use Modules\Gateways\Traits\SmsGateway;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\RateLimiter;
@@ -244,17 +241,6 @@ class LoginController extends Controller
         RateLimiter::hit($key, $decayMinutes * 60);
         return redirect()->back()->withInput($request->only('email', 'remember'))
             ->withErrors(['Password does not match.']);
-    }
-
-    public function reloadCaptcha()
-    {
-        $custome_recaptcha = new CaptchaBuilder;
-        $custome_recaptcha->build();
-        Session::put('six_captcha', $custome_recaptcha->getPhrase());
-
-        return response()->json([
-            'view' => view('auth.custom-captcha', compact('custome_recaptcha'))->render()
-        ], 200);
     }
 
     public function reset_password_request(Request $request)
