@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             UserSeeder::class,
             ShopSeeder::class,
+            VendorStoreSeeder::class,
+            DeliveryManSeeder::class,
             OrderSeeder::class,
             OrderDetailSeeder::class,
             ReviewSeeder::class,

@@ -182,20 +182,17 @@ class ShopSeeder extends Seeder
         );
 
         // --- Products ---
-        $products = [
-            ['id' => $itemIds[0], 'name' => 'Shop Product 1', 'price' => 100.00],
-            ['id' => $itemIds[1], 'name' => 'Shop Product 2', 'price' => 150.00],
-            ['id' => $itemIds[2], 'name' => 'Shop Product 3', 'price' => 200.00],
-            ['id' => $itemIds[3], 'name' => 'Shop Product 4', 'price' => 250.00],
-            ['id' => $itemIds[4], 'name' => 'Shop Product 5', 'price' => 300.00],
-        ];
+        $productCount = 30;
+        for ($i = 0; $i < $productCount; $i++) {
+            $productId = $itemIds[0] + $i;
+            $productName = 'Shop Product ' . ($i + 1);
+            $productPrice = 50.00 + ($i * 25.00);
 
-        foreach ($products as $product) {
             DB::table('items')->updateOrInsert(
-                ['id' => $product['id']],
+                ['id' => $productId],
                 [
-                    'name' => $product['name'],
-                    'description' => $product['name'] . ' Description',
+                    'name' => $productName,
+                    'description' => $productName . ' Description',
                     'image' => '2021-05-18-60a3e590d6811.png',
                     'category_id' => $subCategoryId,
                     'category_ids' => '[{"id":"' . $parentCategoryId . '","position":1},{"id":"' . $subCategoryId . '","position":2}]',
@@ -203,7 +200,7 @@ class ShopSeeder extends Seeder
                     'add_ons' => '[]',
                     'attributes' => '[]',
                     'choice_options' => '[]',
-                    'price' => $product['price'],
+                    'price' => $productPrice,
                     'tax' => 0.00,
                     'tax_type' => 'percent',
                     'discount' => 0.00,
@@ -217,7 +214,7 @@ class ShopSeeder extends Seeder
                     'updated_at' => now(),
                     'module_id' => $moduleId,
                     'stock' => 100,
-                    'slug' => Str::slug($product['name']),
+                    'slug' => Str::slug($productName),
                     'recommended' => 0,
                     'organic' => 0,
                     'is_approved' => 1,
@@ -226,12 +223,12 @@ class ShopSeeder extends Seeder
             );
 
             DB::table('translations')->updateOrInsert(
-                ['translationable_type' => 'App\\Models\\Item', 'translationable_id' => $product['id'], 'locale' => 'en', 'key' => 'name'],
-                ['value' => $product['name'], 'created_at' => now(), 'updated_at' => now()]
+                ['translationable_type' => 'App\\Models\\Item', 'translationable_id' => $productId, 'locale' => 'en', 'key' => 'name'],
+                ['value' => $productName, 'created_at' => now(), 'updated_at' => now()]
             );
             DB::table('translations')->updateOrInsert(
-                ['translationable_type' => 'App\\Models\\Item', 'translationable_id' => $product['id'], 'locale' => 'en', 'key' => 'description'],
-                ['value' => $product['name'] . ' Description', 'created_at' => now(), 'updated_at' => now()]
+                ['translationable_type' => 'App\\Models\\Item', 'translationable_id' => $productId, 'locale' => 'en', 'key' => 'description'],
+                ['value' => $productName . ' Description', 'created_at' => now(), 'updated_at' => now()]
             );
         }
     }
