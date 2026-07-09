@@ -25,7 +25,7 @@
 
     <!-- Logo -->
     <div class="logo">
-        <img src="{{asset('public/assets/installation')}}/assets/img/favicon.svg" alt="">
+        <img src="{{asset('public/full_named_logo.svg')}}" alt="Xerin">
     </div>
 
     <div class="custom-container">
@@ -35,7 +35,7 @@
         <footer class="footer py-3 mt-4">
             <div class="d-flex flex-column flex-sm-row justify-content-between gap-2 align-items-center">
                 <div class="footer-logo">
-                    <img src="{{asset('public/assets/installation')}}/assets/img/logo.svg" alt="">
+                    <img src="{{asset('public/full_named_logo.svg')}}" alt="Xerin">
                 </div>
                 <p class="copyright-text mb-0">© {{date("Y")}} | All Rights Reserved</p>
             </div>
