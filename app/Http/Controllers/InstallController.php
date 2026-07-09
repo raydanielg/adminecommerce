@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\CentralLogics\Helpers;
-use App\Traits\ActivationClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
@@ -11,11 +10,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Storage;
 use Madnest\Madzipper\Facades\Madzipper;
-use Illuminate\Support\Facades\Session;
 
 class InstallController extends Controller
 {
-    use ActivationClass;
 
     public function step0()
     {
@@ -50,15 +47,6 @@ class InstallController extends Controller
         return redirect()->route('step0');
     }
 
-    public function step2(Request $request)
-    {
-        if (Hash::check('step_2', $request['token'])) {
-            return view('installation.step2');
-        }
-        session()->flash('error', 'Access denied!');
-        return redirect()->route('step0');
-    }
-
     public function step3(Request $request)
     {
         if (Hash::check('step_3', $request['token'])) {
@@ -84,27 +72,6 @@ class InstallController extends Controller
         }
         session()->flash('error', 'Access denied!');
         return redirect()->route('step0');
-    }
-
-    public function purchase_code(Request $request)
-    {
-        Helpers::setEnvironmentValue('SOFTWARE_ID', 'MzY3NzIxMTI=');
-        Helpers::setEnvironmentValue('BUYER_USERNAME', $request['username']);
-        Helpers::setEnvironmentValue('PURCHASE_CODE', $request['purchase_key']);
-
-        $post = [
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'username' => $request['username'],
-            'purchase_key' => $request['purchase_key'],
-            'domain' => preg_replace("#^[^:/.]*[:/]+#i", "", url('/')),
-        ];
-        // $response = $this->dmvf($post);
-
-        // return redirect($response.'?token='.bcrypt('step_3'));
-        Session::put(base64_decode('cHVyY2hhc2Vfa2V5'), $request[base64_decode('cHVyY2hhc2Vfa2V5')]);//pk
-        Session::put(base64_decode('dXNlcm5hbWU='), $request[base64_decode('dXNlcm5hbWU=')]);//un
-        return redirect('step3?token='.bcrypt('step_3'));
     }
 
     public function system_settings(Request $request)
