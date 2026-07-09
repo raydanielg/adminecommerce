@@ -1228,6 +1228,11 @@ class Helpers
         ];
     }
 
+    public static function getDecimalPlaces()
+    {
+        return 0.01;
+    }
+
     public static function currency_code()
     {
         if (!config('currency') ){
