@@ -1202,6 +1202,11 @@ class Helpers
         return $config;
     }
 
+    public static function seoPageList()
+    {
+        return [];
+    }
+
     public static function currency_code()
     {
         if (!config('currency') ){
