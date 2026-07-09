@@ -39,8 +39,13 @@ class OrderDetailFactory extends Factory
                 'item_id' => $product['id'],
                 'order_id' => $order_id,
                 'item_campaign_id' => null,
-                'food_details' => json_encode($product),
+                'item_details' => json_encode($product),
+                'price' => $product['price'] ?? 0,
                 'quantity' => $this->faker->numberBetween(1, 5),
+                'tax_amount' => 0,
+                'discount_on_item' => 0,
+                'discount_type' => 'amount',
+                'total_add_on_price' => 0,
                 'created_at' => now(),
                 'updated_at' => now()
             ];
