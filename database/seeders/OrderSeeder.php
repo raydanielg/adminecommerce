@@ -15,8 +15,11 @@ class OrderSeeder extends Seeder
      */
     public function run()
     {
-        Order::factory()
-        ->count(10000)
-        ->create();
+        $total = 10000;
+        $chunk = 1000;
+
+        for ($i = 0; $i < $total; $i += $chunk) {
+            Order::factory()->count($chunk)->create();
+        }
     }
 }

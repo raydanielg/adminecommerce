@@ -14,8 +14,11 @@ class ReviewSeeder extends Seeder
      */
     public function run()
     {
-        Review::factory()
-        ->count(20000)
-        ->create();
+        $total = 20000;
+        $chunk = 1000;
+
+        for ($i = 0; $i < $total; $i += $chunk) {
+            Review::factory()->count($chunk)->create();
+        }
     }
 }
