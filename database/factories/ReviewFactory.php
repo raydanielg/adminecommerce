@@ -21,13 +21,17 @@ class ReviewFactory extends Factory
      */
     public function definition()
     {
+        $itemIds = \App\Models\Item::pluck('id')->toArray();
+        $userIds = \App\Models\User::pluck('id')->toArray();
+        $orderIds = \App\Models\Order::pluck('id')->toArray();
+
         return [
-            'item_id' => $this->faker->numberBetween(1,5000),
-            'user_id'=> $this->faker->numberBetween(1,153701),
-            'order_id'=> $this->faker->numberBetween(1,297950),
+            'item_id' => !empty($itemIds) ? $this->faker->randomElement($itemIds) : 1,
+            'user_id' => !empty($userIds) ? $this->faker->randomElement($userIds) : 1,
+            'order_id' => !empty($orderIds) ? $this->faker->randomElement($orderIds) : 1,
             'item_campaign_id' => null,
-            'comment' => $this->faker->name(),
-            'rating' => $this->faker->numberBetween(1,5),
+            'comment' => $this->faker->sentence(),
+            'rating' => $this->faker->numberBetween(1, 5),
             'created_at' => now(),
             'updated_at' => now()
         ];

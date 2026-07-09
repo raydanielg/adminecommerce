@@ -22,21 +22,30 @@ class OrderDetailFactory extends Factory
      */
     public function definition()
     {
-        $item_id = $this->faker->numberBetween(1,162177);
+        $itemIds = \App\Models\Item::pluck('id')->toArray();
+        $orderIds = \App\Models\Order::pluck('id')->toArray();
+
+        if (empty($itemIds) || empty($orderIds)) {
+            return [];
+        }
+
+        $item_id = $this->faker->randomElement($itemIds);
+        $order_id = $this->faker->randomElement($orderIds);
         $food = Item::find($item_id);
-        if($food)
-        {
+
+        if ($food) {
             $product = Helpers::product_data_formatting($food);
             return [
                 'item_id' => $product['id'],
-                'order_id'=> $this->faker->numberBetween(100029,298425),
+                'order_id' => $order_id,
                 'item_campaign_id' => null,
                 'food_details' => json_encode($product),
-                'quantity' => $this->faker->numberBetween(1,100),
+                'quantity' => $this->faker->numberBetween(1, 5),
                 'created_at' => now(),
                 'updated_at' => now()
             ];
         }
 
+        return [];
     }
 }
