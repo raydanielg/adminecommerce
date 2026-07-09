@@ -1207,6 +1207,27 @@ class Helpers
         return [];
     }
 
+    public static function getCountries()
+    {
+        return [
+            'TZ' => 'Tanzania',
+            'KE' => 'Kenya',
+            'UG' => 'Uganda',
+            'RW' => 'Rwanda',
+            'BI' => 'Burundi',
+            'NG' => 'Nigeria',
+            'GH' => 'Ghana',
+            'ZA' => 'South Africa',
+            'US' => 'United States',
+            'GB' => 'United Kingdom',
+            'CA' => 'Canada',
+            'AU' => 'Australia',
+            'IN' => 'India',
+            'AE' => 'United Arab Emirates',
+            'SA' => 'Saudi Arabia',
+        ];
+    }
+
     public static function currency_code()
     {
         if (!config('currency') ){
