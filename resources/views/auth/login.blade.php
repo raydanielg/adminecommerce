@@ -126,8 +126,6 @@
                         <!-- End forget password -->
                     </div>
 
-                    @include('admin-views.partials._recaptcha')
-
                     <button type="submit" class="btn btn-lg btn-block btn--primary mt-xxl-3" id="signInBtn">{{translate('messages.login')}}</button>
                 </form>
                 <!-- End Form -->
@@ -313,70 +311,7 @@
     });
 </script>
 
-<script>
-    $(document).on('click', '.reloadCaptcha', function () {
-        $.ajax({
-            url: "{{ route('reload-captcha') }}",
-            type: "GET",
-            dataType: 'json',
-            beforeSend: function () {
-                $('#loading').show()
-                $('.capcha-spin').addClass('active')
-            },
-            success: function (data) {
-                $('#reload-captcha').html(data.view);
-            },
-            complete: function () {
-                $('#loading').hide()
-                $('.capcha-spin').removeClass('active')
-            }
-        });
-    });
-
-</script>
-
-@if(isset($recaptcha) && $recaptcha['status'] == 1)
-    <script src="https://www.google.com/recaptcha/api.js?render={{$recaptcha['site_key']}}"></script>
-@endif
-@if(isset($recaptcha) && $recaptcha['status'] == 1)
-    <script>
-        $(document).ready(function () {
-            $('#signInBtn').click(function (e) {
-                if ($('#set_default_captcha_value').val() == 1) {
-                    $('#form-id').submit();
-                    return true;
-                }
-                e.preventDefault();
-                if (typeof grecaptcha === 'undefined') {
-                    toastr.error('Invalid recaptcha key provided. Please check the recaptcha configuration.');
-                    $('#reload-captcha').removeClass('d-none');
-                    $('#set_default_captcha_value').val('1');
-
-                    return;
-                }
-                grecaptcha.ready(function () {
-                    grecaptcha.execute('{{$recaptcha['site_key']}}', { action: 'submit' }).then(function (token) {
-                        $('#g-recaptcha-response').val(token);
-                        $('#form-id').submit();
-                    });
-                });
-                window.onerror = function (message) {
-                    var errorMessage = 'An unexpected error occurred. Please check the recaptcha configuration';
-                    if (message.includes('Invalid site key')) {
-                        errorMessage = 'Invalid site key provided. Please check the recaptcha configuration.';
-                    } else if (message.includes('not loaded in api.js')) {
-                        errorMessage = 'reCAPTCHA API could not be loaded. Please check the recaptcha API configuration.';
-                    }
-                    $('#reload-captcha').removeClass('d-none');
-                    $('#set_default_captcha_value').val('1');
-                    toastr.error(errorMessage)
-                    return true;
-                };
-            });
-        });
-    </script>
-@endif
-{{-- recaptcha scripts end --}}
+{{-- recaptcha scripts removed --}}
 
 
 
